@@ -15,15 +15,13 @@ else:
 
 PROMPT_DICT = {
     "prompt_input": (
-        "Below is an instruction that describes a task, paired with an input that provides further context. "
-        "Write a response that appropriately completes the request.\n\n"
-        "### Instruction:\n{instruction}\n\n### Input:\n{input}\n\n### Response:"
+        "[INST]  {instruction}\n{input} [/INST]"
     ),
-    "prompt_no_input": (
-        "Below is an instruction that describes a task. "
-        "Write a response that appropriately completes the request.\n\n"
-        "### Instruction:\n{instruction}\n\n### Response:"
-    ),
+    # "prompt_no_input": (
+    #     "Below is an instruction that describes a task. "
+    #     "Write a response that appropriately completes the request.\n\n"
+    #     "### Instruction:\n{instruction}\n\n### Response:"
+    # ),
 }
 
 def parse_args():
@@ -89,9 +87,9 @@ def main():
     args = parse_args()
     print(args)
 
-    from transformers import LlamaTokenizer, LlamaForCausalLM
-    model = LlamaForCausalLM.from_pretrained(args.model_name_or_path, device_map="auto", cache_dir='../cache', output_hidden_states=True)
-    tokenizer = LlamaTokenizer.from_pretrained(args.model_name_or_path, cache_dir='../cache')
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+    model = AutoModelForCausalLM.from_pretrained(args.model_name_or_path, device_map="auto", cache_dir='../cache', output_hidden_states=True)
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, cache_dir='../cache')
 
     model.eval()
 
